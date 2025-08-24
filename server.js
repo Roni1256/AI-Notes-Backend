@@ -15,15 +15,25 @@ import aiRoute from "./routes/ai.route.js";
 import foldersRoute from "./routes/folder.route.js";
 
 const app = express();
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://ai-notes-omega-khaki.vercel.app"
+];
+
 app.use(
   cors({
-    origin: ["http://localhost:5173","https://ai-notes-omega-khaki.vercel.app/"],
-    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
     credentials: true,
   })
 );
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
