@@ -13,6 +13,7 @@ import { Strategy as GitHubStrategy } from "passport-github2";
 import notesRoute from "./routes/notes.route.js";
 import aiRoute from "./routes/ai.route.js";
 import foldersRoute from "./routes/folder.route.js";
+import flowchartRoute from "./routes/flowchart.route.js"
 
 const app = express();
 const allowedOrigins = [
@@ -93,6 +94,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/notes", notesRoute);
 app.use("/api/ai", aiRoute);
 app.use("/api/folders", foldersRoute);
+app.use('/api/flowchart',flowchartRoute)
 connectToDb()
   .then(() => {
     app.listen(PORT, () => {
