@@ -46,7 +46,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:5000/api/auth/google/callback",
+      callbackURL: `${PORT}/api/auth/google/callback`,
     },
     function (accessToken, refreshToken, profile, done) {
       GoogleOAuth(profile, done);
@@ -66,7 +66,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "http://localhost:5000/api/auth/github/callback",
+      callbackURL: `${PORT}/api/auth/github/callback`,
     },
     function (accessToken, refreshToken, profile, done) {
       GithubOAuth(profile, done);
