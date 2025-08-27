@@ -1,5 +1,5 @@
 import {Router} from "express"
-import { createFlowchart } from "../controllers/flowchart.controller";
+import { createFlowchart } from "../controllers/flowchart.controller.js";
 
 const route=Router();
 

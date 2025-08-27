@@ -1,8 +1,10 @@
-import Flowchart from "../models/flowchart.model";
+import Flowchart from "../models/flowchart.model.js";
 
 export async function createFlowchart(req,res){
     try {
         const {name,description}=req.body;
+        console.log(name,description);
+        
         if(!name || !description){
             return res.status(401).json({message:"Missing Data"});
         }

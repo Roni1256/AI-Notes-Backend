@@ -49,7 +49,7 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-const PORT = process.env.PORT || 5000;
+const PORT = 5000|| process.env.PORT ;
 
 /// Google Passport
 passport.use(
