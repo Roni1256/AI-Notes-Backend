@@ -1,19 +1,20 @@
 import express from "express";
 import dotenv from "dotenv";
-import { connectToDb } from "./database/connectDatabase.js";
-dotenv.config();
 import cors from "cors";
-import authRoute from "./routes/user.route.js";
+import session from "express-session";
 import cookieParser from "cookie-parser";
 import passport from "passport";
-import session from "express-session";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { GithubOAuth, GoogleOAuth } from "./middleware/OAuth.js";
 import { Strategy as GitHubStrategy } from "passport-github2";
+import { GithubOAuth, GoogleOAuth } from "./middleware/OAuth.js";
+import { connectToDb } from "./database/connectDatabase.js";
+import authRoute from "./routes/user.route.js";
 import notesRoute from "./routes/notes.route.js";
 import aiRoute from "./routes/ai.route.js";
 import foldersRoute from "./routes/folder.route.js";
 import flowchartRoute from "./routes/flowchart.route.js"
+
+dotenv.config();
 
 const app = express();
 const allowedOrigins = [
@@ -96,11 +97,11 @@ app.use("/api/ai", aiRoute);
 app.use("/api/folders", foldersRoute);
 app.use('/api/flowchart',flowchartRoute)
 connectToDb()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error("Failed to connect to database:", error);
+.then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
   });
+})
+.catch((error) => {
+  console.error("Failed to connect to database:", error);
+});
