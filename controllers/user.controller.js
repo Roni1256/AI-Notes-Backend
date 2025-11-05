@@ -104,7 +104,7 @@ export const verifyCode=async(req,res)=>{
             res.cookie('token', token, {
               httpOnly: true,
               secure: true,
-              sameSite: 'None',
+              sameSite: 'none',
               maxAge: 7 * 24 * 60 * 60 * 1000,
               path: "/",
               partitioned: true 
@@ -177,7 +177,7 @@ export const login=async(req,res)=>{
     res.cookie('token', token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'None',
+      sameSite: 'none',
       maxAge: 7 * 24 * 60 * 60 * 1000,
       path: "/",
       partitioned: true 
@@ -201,10 +201,13 @@ export const login=async(req,res)=>{
     if (err) {
       return next(err);
     }
-
+    console.log(req.cookies);
+    
     req.session.destroy(() => {
       res.clearCookie('connect.sid');
-      res.clearCookie('token');
+      res.clearCookie('token', { path: '/' });
+  
+      
       // Optional: Redirect to Google's logout if needed
       const logoutFromGoogle = false; // set to true if you want full Google logout
 
@@ -246,7 +249,6 @@ export const getCurrentUser = async (req, res) => {
 };  
 
 export const changePassword=async(req,res)=>{
-  console.log("heloo");
   
   try {
     const {currentPassword,newPassword}=req.body;
