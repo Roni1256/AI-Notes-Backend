@@ -12,14 +12,15 @@ import authRoute from "./routes/user.route.js";
 import notesRoute from "./routes/notes.route.js";
 import aiRoute from "./routes/ai.route.js";
 import foldersRoute from "./routes/folder.route.js";
-import flowchartRoute from "./routes/flowchart.route.js"
+import flowchartRoute from "./routes/flowchart.route.js";
 
 dotenv.config();
 
 const app = express();
+const PORT = 5000 || process.env.PORT;
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://ai-notes-omega-khaki.vercel.app"
+  "https://ai-notes-omega-khaki.vercel.app",
 ];
 
 app.use(
@@ -46,11 +47,9 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 app.use(passport.initialize());
 app.use(passport.session());
 
-const PORT = 5000|| process.env.PORT ;
 
 /// Google Passport
 passport.use(
@@ -95,13 +94,14 @@ app.use("/api/auth", authRoute);
 app.use("/api/notes", notesRoute);
 app.use("/api/ai", aiRoute);
 app.use("/api/folders", foldersRoute);
-app.use('/api/flowchart',flowchartRoute)
+app.use("/api/flowchart", flowchartRoute);
+
 connectToDb()
-.then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Failed to connect to database:", error);
   });
-})
-.catch((error) => {
-  console.error("Failed to connect to database:", error);
-});
